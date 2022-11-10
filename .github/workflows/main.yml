@@ -20,11 +20,11 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.6
       
     - name: Restore Packages
-      run: nuget restore AmazFit_Watchface_Editor.sln.sln
+      run: nuget restore AmazFit_Watchface_Editor.sln
 
     - name: Build Solution
       run: |
-        msbuild.exe AmazFit_Watchface_Editor.sln.sln -t:rebuild -property:Configuration=Release
+        msbuild.exe AmazFit_Watchface_Editor.sln -t:rebuild -property:Configuration=Release
         
     - name: Archive Release
       uses: vimtor/action-zip@v1
