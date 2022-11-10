@@ -1523,7 +1523,7 @@ namespace GTR_Watch_face
                 Image loadedImage = null;
                 List<string> ErrorImage = new List<string>();
                 List<string> FileNames = openFileDialog.FileNames.ToList();
-                FileNames.Sort();
+                //FileNames.Sort();
                 foreach (String file in FileNames)
                     //foreach (String file in openFileDialog.FileNames)
                     {
