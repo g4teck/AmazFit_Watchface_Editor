@@ -1,0 +1,42 @@
+name: Release Build
+
+on: 
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.6
+      
+    - name: Restore Packages
+      run: nuget restore AmazFit_Watchface_Editor.sln.sln
+
+    - name: Build Solution
+      run: |
+        msbuild.exe AmazFit_Watchface_Editor.sln.sln -t:rebuild -property:Configuration=Release
+        
+    - name: Archive Release
+      uses: vimtor/action-zip@v1
+      with:
+        files: GTR_Watch_face/bin/Release/
+        dest: release.zip
+      
+    - name: Upload release
+      uses: djnicholson/release-action@v2.11
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        release-name: 'Release'
+        tag-name: 'v0.9'
+        asset-name: 'release.zip'
+        file: 'release.zip'
